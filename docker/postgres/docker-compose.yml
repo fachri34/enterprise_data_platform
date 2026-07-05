@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  sources-postgres:
+    image: postgres:16
+    container_name: sources-postgres
+    hostname: sources-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${SRC_POSTGRES_DB}
+      POSTGRES_USER: ${SRC_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SRC_POSTGRES_PASSWORD}
+
+    ports:
+      - "${SRC_POSTGRES_PORT}:5432"
+
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - source-volume:/var/lib/postgresql/data
+
+    networks:
+      - enterprise-networks
+
+networks:
+  enterprise-networks:
+    external: true
+
+volumes:
+  source-volume:
