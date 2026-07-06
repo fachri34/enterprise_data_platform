@@ -1,0 +1,22 @@
+pandas==2.2.3
+pendulum==3.0.0
+minio==7.2.8
+pangres==4.2.1
+
+apache-airflow==2.10.2
+
+# Airflow Providers
+apache-airflow-providers-postgres==5.13.1
+apache-airflow-providers-amazon==9.0.0
+apache-airflow-providers-google==10.22.0
+
+
+# PostgreSQL
+psycopg2-binary==2.9.10
+
+# BigQuery
+google-cloud-bigquery
+google-cloud-storage
+
+# dbt
+astronomer-cosmos==1.8.0

@@ -1,0 +1,73 @@
+{
+  "ADVENTUREWORKS_STAGING__table_to_extract_and_load": {
+    "product": [
+      "production",
+      "productid"
+    ],
+    "productsubcategory": [
+      "production",
+      "productsubcategoryid"
+    ],
+    "productcategory": [
+      "production",
+      "productcategoryid"
+    ],
+    "productinventory": [
+      "production",
+      [
+        "productid",
+        "locationid"
+      ]
+    ],
+    "productlistpricehistory": [
+      "production",
+      [
+        "productid",
+        "startdate"
+      ]
+    ],
+    "productcosthistory": [
+      "production",
+      [
+        "productid",
+        "startdate"
+      ]
+    ],
+    "salesorderheader": [
+      "sales",
+      "salesorderid"
+    ],
+    "salesorderdetail": [
+      "sales",
+      [
+        "salesorderid",
+        "salesorderdetailid"
+      ]
+    ],
+    "customer": [
+      "sales",
+      "customerid"
+    ],
+    "store": [
+      "sales",
+      "businessentityid"
+    ],
+    "salesperson": [
+      "sales",
+      "businessentityid"
+    ],
+    "specialoffer": [
+      "sales",
+      "specialofferid"
+    ],
+    "specialofferproduct": [
+      "sales",
+      [
+        "specialofferid",
+        "productid"
+      ]
+    ]
+  },
+  "ADVENTUREWORKS_STAGING_INCREMENTAL_MODE": "False",
+  "ADVENTUREWORKS_WAREHOUSE_INIT": "True"
+}
