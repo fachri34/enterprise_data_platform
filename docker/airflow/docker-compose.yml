@@ -29,6 +29,7 @@ x-airflow-common:
     AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
     AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: 120
     GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/creds/gcp-service-account.json
+    GCP_PROJECT_ID: ${GCP_PROJECT_ID}
     
   volumes:
       - ../../pipeline/dags:/opt/airflow/dags
@@ -60,7 +61,7 @@ services:
       start_period: 5s
     restart: always
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   redis:
     container_name: redis
@@ -75,7 +76,7 @@ services:
       start_period: 30s
     restart: always
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-webserver:
     container_name: airflow-webserver
@@ -95,7 +96,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-scheduler:
     container_name: airflow-scheduler
@@ -113,7 +114,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-worker:
     container_name: airflow-worker
@@ -136,7 +137,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-triggerer:
     container_name: airflow-triggerer
@@ -154,7 +155,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-init:
     container_name: airflow-init
@@ -222,7 +223,7 @@ services:
       - ../../creds:/opt/airflow/creds:ro
 
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   airflow-cli:
     container_name: airflow-cli
@@ -237,7 +238,7 @@ services:
       - -c
       - airflow
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
   flower:
     container_name: flower
@@ -259,12 +260,11 @@ services:
       airflow-init:
         condition: service_completed_successfully
     networks:
-      - enterprice-networks
+      - enterprise-networks
 
 networks:
-  enterprice-networks:
-    driver: bridge
-    name: enterprice-networks
+  enterprise-networks:
+    external: true
 
 volumes:
   airflow-metadata-2:

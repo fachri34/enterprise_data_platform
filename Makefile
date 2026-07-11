@@ -1,38 +1,31 @@
 include .env
 
-compose-up: postgres minio airflow
+compose-up: postgres-up minio-up airflow-up
 	@echo '__________________________________________________________'
 	@echo 'All containers are up and running...'
 	@echo '==========================================================='
 
-postgres:
+postgres-up:
 	@echo '__________________________________________________________'
 	@echo 'Creating PostgreSQL Source...'
 	@echo '__________________________________________________________'
 	@docker compose -f ./docker/postgres/docker-compose.yml --env-file .env up -d
 	@echo '==========================================================='
 
-minio:
+minio-up:
 	@echo '__________________________________________________________'
 	@echo 'Creating MinIO Data Lake...'
 	@echo '__________________________________________________________'
 	@docker compose -f ./docker/minio/docker-compose.yml --env-file .env up -d
 	@echo '==========================================================='
 
-airflow:
+airflow-up:
 	@echo '__________________________________________________________'
 	@echo 'Creating Airflow Instance...'
 	@echo '__________________________________________________________'
 	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env up -d
 	@echo '==========================================================='
 
-airflow-down:
-	@echo 'Stopping Airflow...'
-	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env down
-
-airflow-reset:
-	@echo 'Removing Airflow Containers & Volumes...'
-	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env down -v
 
 airflow-connection:
 	@echo '__________________________________________________________'
@@ -41,19 +34,19 @@ airflow-connection:
 	@docker exec -i airflow-webserver airflow variables import -a overwrite /init/variables_and_connections/airflow_variables_init.json
 	@echo '==========================================================='
 
+compose-down: postgres-down minio-down airflow-down
+	@echo '__________________________________________________________'
+	@echo 'All containers are down...'
+	@echo '==========================================================='
 
-compose-down:
-	@echo '__________________________________________________________'
-	@echo 'Stopping and removing containers...'
-	@echo '__________________________________________________________'
+postgres-down:
+	@echo 'Stopping PostgreSQL...'
 	@docker compose -f ./docker/postgres/docker-compose.yml --env-file .env down
-	@docker compose -f ./docker/minio/docker-compose.yml --env-file .env down
-	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env down
-	@echo '==========================================================='
 
-delete-volumes:
-	@echo '__________________________________________________________'
-	@echo 'Deleting volumes...'
-	@echo '__________________________________________________________'
-	@docker volume rm source-volume
-	@echo '==========================================================='
+minio-down:
+	@echo 'Stopping MinIO...'
+	@docker compose -f ./docker/minio/docker-compose.yml --env-file .env down
+
+airflow-down:
+	@echo 'Stopping Airflow...'
+	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env down

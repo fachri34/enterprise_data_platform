@@ -1,3 +1,4 @@
 .env
-docker/airflow/variables_and_connections/airflow_connection_init.yml
+**/airflow_connections_init.yml
+**/airflow_variables_init.json
 creds
