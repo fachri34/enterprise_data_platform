@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw_sales
+    description: "Raw sales data from AdventureWorks"
+    database: adventureworks-pipeline-501611
+    schema: raw
+
+    tables:
+      - name: salesorderdetail
+      - name: salesorderheader
+      - name: salesperson
+      - name: specialoffer
+      - name: specialofferproduct
+      - name: store
+      - name: customer

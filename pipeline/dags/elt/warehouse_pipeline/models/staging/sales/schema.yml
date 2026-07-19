@@ -1,0 +1,127 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: Customer master.
+
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+      - name: store_id
+
+      - name: territory_id
+
+      - name: person_id
+
+  - name: stg_sales_order_header
+    description: Sales order header.
+
+    columns:
+      - name: sales_order_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customer')
+              field: customer_id
+
+      - name: order_date
+        tests:
+          - not_null
+
+      - name: status
+
+      - name: total_due
+        tests:
+          - not_null
+
+  - name: stg_sales_order_detail
+    description: Sales order detail.
+
+    columns:
+      - name: sales_order_detail_id
+        tests:
+          - not_null
+
+      - name: sales_order_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_order_header')
+              field: sales_order_id
+
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_product')
+              field: product_id
+
+      - name: order_quantity
+        tests:
+          - not_null
+
+      - name: unit_price
+        tests:
+          - not_null
+
+  - name: stg_store
+    description: Store information.
+
+    columns:
+      - name: business_entity_id
+        tests:
+          - unique
+          - not_null
+
+      - name: store_name
+        tests:
+          - not_null
+
+  - name: stg_sales_person
+    description: Salesperson information.
+
+    columns:
+      - name: sales_person_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_quota
+
+      - name: sales_ytd
+
+  - name: stg_special_offer
+    description: Sales special offers.
+
+    columns:
+      - name: special_offer_id
+        tests:
+          - unique
+          - not_null
+
+      - name: special_offer_description
+        tests:
+          - not_null
+
+      - name: discount_pct
+
+  - name: stg_special_offer_product
+    description: Bridge table between product and special offer.
+
+    columns:
+      - name: special_offer_id
+        tests:
+          - relationships:
+              to: ref('stg_special_offer')
+              field: special_offer_id
+
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_product')
+              field: product_id

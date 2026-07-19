@@ -67,7 +67,7 @@ def load_task(incremental: bool):
             ],
             outlets=[
                 Dataset(
-                    f"bigquery://{GCP_PROJECT_ID}/adv_staging/{table_name}"
+                    f"bigquery://{GCP_PROJECT_ID}/raw/{table_name}"
                 )
             ],
             trigger_rule="none_failed",  # Continue even if some tasks fail

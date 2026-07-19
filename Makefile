@@ -26,6 +26,12 @@ airflow-up:
 	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env up -d
 	@echo '==========================================================='
 
+airflow-compose-build:
+	@echo '__________________________________________________________'
+	@echo 'Building Airflow Instance...'
+	@echo '__________________________________________________________'
+	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env build --no-cache
+	@echo '==========================================================='
 
 airflow-connection:
 	@echo '__________________________________________________________'

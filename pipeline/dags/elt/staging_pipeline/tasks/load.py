@@ -46,7 +46,7 @@ def load(
     bq.load_dataframe(
         dataframe=df,
         project_id=project_id,
-        dataset_id="adv_staging",
+        dataset_id="raw",
         table_name=table_name,
         write_disposition=write_disposition,
     )

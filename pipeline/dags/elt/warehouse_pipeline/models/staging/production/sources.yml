@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw_production
+    description: "Raw product data from AdventureWorks"
+    database: adventureworks-pipeline-501611
+    schema: raw
+
+    tables:
+      - name: customer
+      - name: product
+      - name: productcategory
+      - name: productcosthistory
+      - name: productinventory
+      - name: productlistpricehistory
+      - name: productsubcategory
