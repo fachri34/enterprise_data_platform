@@ -1,5 +1,5 @@
 select
-    businessentityid as business_entity_id,
+    businessentityid as store_id,
     name as store_name,
     salespersonid as sales_person_id,
     demographics as demographics,

@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw_purchasing
+    description: "Raw purchasing data from AdventureWorks"
+    database: adventureworks-pipeline-501611
+    schema: raw
+
+    tables:
+      - name: shipmethod

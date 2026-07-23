@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_ship_method
+    description: Shipping methods used for customer orders.
+
+    columns:
+      - name: ship_method_id
+        description: Primary key of shipping method.
+        tests:
+          - unique
+          - not_null
+
+      - name: ship_method_name
+        description: Shipping method name.
+        tests:
+          - not_null
+
+      - name: ship_base
+        description: Fixed shipping cost.
+
+      - name: ship_rate
+        description: Variable shipping rate.
+
+      - name: row_guid
+
+      - name: modified_date

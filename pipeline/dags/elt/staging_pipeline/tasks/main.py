@@ -14,7 +14,7 @@ GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 def extract_task(incremental: bool):
 
     tables = Variable.get(
-        "ADVENTUREWORKS_STAGING_table_to_extract_and_load",
+        "ADVENTUREWORKS_STAGING_TABLES",
         deserialize_json=True,
     )
 
@@ -43,7 +43,7 @@ def extract_task(incremental: bool):
 def load_task(incremental: bool):
 
     tables = Variable.get(
-        "ADVENTUREWORKS_STAGING_table_to_extract_and_load",
+        "ADVENTUREWORKS_STAGING_TABLES",
         deserialize_json=True,
     )
 

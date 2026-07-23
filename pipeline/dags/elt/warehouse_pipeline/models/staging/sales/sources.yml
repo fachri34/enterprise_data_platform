@@ -7,10 +7,13 @@ sources:
     schema: raw
 
     tables:
-      - name: salesorderdetail
       - name: salesorderheader
+      - name: salesorderdetail
+      - name: customer
+      - name: store
       - name: salesperson
+      - name: salesterritory
+      - name: salesreason
+      - name: salesorderheadersalesreason
       - name: specialoffer
       - name: specialofferproduct
-      - name: store
-      - name: customer

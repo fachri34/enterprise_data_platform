@@ -7,10 +7,12 @@ sources:
     schema: raw
 
     tables:
-      - name: customer
       - name: product
-      - name: productcategory
-      - name: productcosthistory
-      - name: productinventory
-      - name: productlistpricehistory
       - name: productsubcategory
+      - name: productcategory
+      - name: productmodel
+      - name: productinventory
+      - name: location
+      - name: unitmeasure
+      - name: productcosthistory
+      - name: productlistpricehistory

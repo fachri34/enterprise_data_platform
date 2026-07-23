@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw_person
+    description: "Raw person data from AdventureWorks"
+    database: adventureworks-pipeline-501611
+    schema: raw
+
+    tables:
+      - name: person
+      - name: countryregion

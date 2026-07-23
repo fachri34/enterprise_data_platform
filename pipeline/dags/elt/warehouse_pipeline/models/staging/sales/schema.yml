@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: stg_customer
-    description: Customer master.
+    description: Customer master data.
 
     columns:
       - name: customer_id
@@ -10,11 +10,108 @@ models:
           - unique
           - not_null
 
-      - name: store_id
-
-      - name: territory_id
-
       - name: person_id
+        tests:
+          - relationships:
+              to: ref('stg_person')
+              field: person_id
+
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('stg_store')
+              field: store_id
+
+      - name: sales_territory_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_territory')
+              field: sales_territory_id
+
+      - name: modified_date
+
+
+  - name: stg_store
+    description: Store information.
+
+    columns:
+      - name: store_id
+        tests:
+          - unique
+          - not_null
+
+      - name: store_name
+        tests:
+          - not_null
+
+      - name: sales_person_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_person')
+              field: sales_person_id
+
+      - name: modified_date
+
+
+  - name: stg_sales_person
+    description: Salesperson information.
+
+    columns:
+      - name: sales_person_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_territory_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_territory')
+              field: sales_territory_id
+
+      - name: sales_quota
+
+      - name: bonus
+
+      - name: commission_pct
+
+      - name: sales_ytd
+
+      - name: sales_last_year
+
+      - name: modified_date
+
+
+  - name: stg_sales_territory
+    description: Sales territory dimension.
+
+    columns:
+      - name: sales_territory_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_territory_name
+        tests:
+          - not_null
+
+      - name: sales_country_region_code
+        tests:
+          - relationships:
+              to: ref('stg_country_region')
+              field: country_region_code
+
+      - name: sales_territory_group
+
+      - name: sales_ytd
+
+      - name: sales_last_year
+
+      - name: cost_ytd
+
+      - name: cost_last_year
+
+      - name: modified_date
+
 
   - name: stg_sales_order_header
     description: Sales order header.
@@ -31,15 +128,48 @@ models:
               to: ref('stg_customer')
               field: customer_id
 
+      - name: sales_person_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_person')
+              field: sales_person_id
+
+      - name: sales_territory_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_territory')
+              field: sales_territory_id
+
+      - name: ship_method_id
+        tests:
+          - relationships:
+              to: ref('stg_ship_method')
+              field: ship_method_id
+
       - name: order_date
         tests:
           - not_null
 
+      - name: due_date
+
+      - name: ship_date
+
       - name: status
+
+      - name: subtotal
+        tests:
+          - not_null
+
+      - name: tax_amount
+
+      - name: freight
 
       - name: total_due
         tests:
           - not_null
+
+      - name: modified_date
+
 
   - name: stg_sales_order_detail
     description: Sales order detail.
@@ -61,6 +191,12 @@ models:
               to: ref('stg_product')
               field: product_id
 
+      - name: special_offer_id
+        tests:
+          - relationships:
+              to: ref('stg_special_offer')
+              field: special_offer_id
+
       - name: order_quantity
         tests:
           - not_null
@@ -69,31 +205,12 @@ models:
         tests:
           - not_null
 
-  - name: stg_store
-    description: Store information.
+      - name: unit_price_discount
 
-    columns:
-      - name: business_entity_id
-        tests:
-          - unique
-          - not_null
+      - name: line_total
 
-      - name: store_name
-        tests:
-          - not_null
+      - name: modified_date
 
-  - name: stg_sales_person
-    description: Salesperson information.
-
-    columns:
-      - name: sales_person_id
-        tests:
-          - unique
-          - not_null
-
-      - name: sales_quota
-
-      - name: sales_ytd
 
   - name: stg_special_offer
     description: Sales special offers.
@@ -110,6 +227,21 @@ models:
 
       - name: discount_pct
 
+      - name: special_offer_type
+
+      - name: special_offer_category
+
+      - name: start_date
+
+      - name: end_date
+
+      - name: min_qty
+
+      - name: max_qty
+
+      - name: modified_date
+
+
   - name: stg_special_offer_product
     description: Bridge table between product and special offer.
 
@@ -125,3 +257,42 @@ models:
           - relationships:
               to: ref('stg_product')
               field: product_id
+
+      - name: modified_date
+
+
+  - name: stg_sales_reason
+    description: Sales reason dimension.
+
+    columns:
+      - name: sales_reason_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_reason_name
+        tests:
+          - not_null
+
+      - name: reason_type
+
+      - name: modified_date
+
+
+  - name: stg_sales_order_header_sales_reason
+    description: Bridge table between sales orders and sales reasons.
+
+    columns:
+      - name: sales_order_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_order_header')
+              field: sales_order_id
+
+      - name: sales_reason_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_reason')
+              field: sales_reason_id
+
+      - name: modified_date

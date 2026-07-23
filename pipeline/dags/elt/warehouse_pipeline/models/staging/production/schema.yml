@@ -10,24 +10,53 @@ models:
           - unique
           - not_null
 
-      - name: product_subcategory_id
+      - name: product_name
+        tests:
+          - not_null
 
       - name: product_number
         tests:
           - unique
           - not_null
 
-      - name: product_name
+      - name: product_subcategory_id
         tests:
-          - not_null
+          - relationships:
+              to: ref('stg_product_subcategory')
+              field: product_subcategory_id
+
+      - name: product_model_id
+        tests:
+          - relationships:
+              to: ref('stg_product_model')
+              field: product_model_id
+
+      - name: size_unit_measure_code
+        tests:
+          - relationships:
+              to: ref('stg_unit_measure')
+              field: unit_measure_code
+
+      - name: weight_unit_measure_code
+        tests:
+          - relationships:
+              to: ref('stg_unit_measure')
+              field: unit_measure_code
 
       - name: standard_cost
-
+  
       - name: list_price
 
       - name: sell_start_date
         tests:
           - not_null
+
+      - name: sell_end_date
+
+      - name: discontinued_date
+
+      - name: modified_date
+
 
   - name: stg_product_category
     description: Product categories.
@@ -42,6 +71,9 @@ models:
         tests:
           - unique
           - not_null
+
+      - name: modified_date
+
 
   - name: stg_product_subcategory
     description: Product subcategories.
@@ -62,6 +94,65 @@ models:
         tests:
           - not_null
 
+      - name: modified_date
+
+
+  - name: stg_product_model
+    description: Product models.
+
+    columns:
+      - name: product_model_id
+        tests:
+          - unique
+          - not_null
+
+      - name: product_model_name
+        tests:
+          - not_null
+
+      - name: catalog_description
+
+      - name: instructions
+
+      - name: modified_date
+
+
+  - name: stg_unit_measure
+    description: Unit of measure reference.
+
+    columns:
+      - name: unit_measure_code
+        tests:
+          - unique
+          - not_null
+
+      - name: unit_measure_name
+        tests:
+          - not_null
+
+      - name: modified_date
+
+
+  - name: stg_location
+    description: Inventory locations.
+
+    columns:
+      - name: location_id
+        tests:
+          - unique
+          - not_null
+
+      - name: location_name
+        tests:
+          - not_null
+
+      - name: cost_rate
+
+      - name: availability
+
+      - name: modified_date
+
+
   - name: stg_product_inventory
     description: Product inventory.
 
@@ -73,8 +164,21 @@ models:
               field: product_id
 
       - name: location_id
+        tests:
+          - relationships:
+              to: ref('stg_location')
+              field: location_id
+
+      - name: shelf
+
+      - name: bin
 
       - name: quantity
+        tests:
+          - not_null
+
+      - name: modified_date
+
 
   - name: stg_product_list_price_history
     description: Product list price history.
@@ -90,6 +194,15 @@ models:
         tests:
           - not_null
 
+      - name: end_date
+
+      - name: list_price
+        tests:
+          - not_null
+
+      - name: modified_date
+
+
   - name: stg_product_cost_history
     description: Product cost history.
 
@@ -99,7 +212,14 @@ models:
           - relationships:
               to: ref('stg_product')
               field: product_id
-
+      
       - name: start_date
         tests:
           - not_null
+      - name: end_date
+
+      - name: standard_cost
+        tests:
+          - not_null
+
+      - name: modified_date

@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_person
+    description: Person master data used for customers and salespersons.
+
+    columns:
+      - name: person_id
+        description: Primary key of person.
+        tests:
+          - unique
+          - not_null
+
+      - name: person_type
+
+      - name: first_name
+        tests:
+          - not_null
+
+      - name: middle_name
+
+      - name: last_name
+        tests:
+          - not_null
+
+      - name: full_name
+
+      - name: email_promotion
+
+      - name: row_guid
+
+      - name: modified_date
+
+  - name: stg_country_region
+    description: Country reference table.
+
+    columns:
+      - name: country_region_code
+        description: ISO country code.
+        tests:
+          - unique
+          - not_null
+
+      - name: country_region_name
+        tests:
+          - unique
+          - not_null
+
+      - name: modified_date

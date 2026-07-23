@@ -1,6 +1,6 @@
 select
     businessentityid as sales_person_id,
-    territoryid as territory_id,
+    territoryid as sales_territory_id,
     salesquota as sales_quota,
     bonus as bonus,
     commissionpct as commission_pct,
