@@ -46,19 +46,21 @@ select
 
     c.customer_name,
 
+    c.store_id,
+
     c.store_name,
 
     o.sales_person_id,
 
     o.shipmethod_id,
 
-    ship.shipmethod_name,
+    s.shipmethod_name,
 
     o.sales_territory_id,
 
-    territory.sales_territory_name,
+    t.sales_territory_name,
 
-    territory.sales_territory_group,
+    t.sales_territory_group,
 
     o.subtotal,
 
@@ -74,10 +76,10 @@ left join customer c
 
 on o.customer_id=c.customer_id
 
-left join ship
+left join ship s
 
-on o.shipmethod_id=ship.shipmethod_id
+on o.shipmethod_id=s.shipmethod_id
 
-left join territory
+left join territory t
 
-on o.sales_territory_id=territory.sales_territory_id
+on o.sales_territory_id=t.sales_territory_id

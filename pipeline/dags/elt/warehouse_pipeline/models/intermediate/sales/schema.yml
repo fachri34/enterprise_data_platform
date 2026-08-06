@@ -1,0 +1,57 @@
+version: 2
+
+models:
+
+  - name: int_sales_orders
+    description: Sales order header enriched with customer information.
+
+    columns:
+
+      - name: sales_order_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('int_customer')
+              field: customer_id
+
+      - name: sales_territory_id
+
+      - name: shipmethod_id
+
+      - name: order_date
+        tests:
+          - not_null
+
+      - name: total_due
+
+  - name: int_sales_order_items
+    description: Sales order line items enriched with product information.
+
+    columns:
+
+      - name: sales_order_detail_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_order_id
+        tests:
+          - relationships:
+              to: ref('int_sales_orders')
+              field: sales_order_id
+
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('int_product_master')
+              field: product_id
+
+      - name: gross_sales
+
+      - name: discount_amount
+
+      - name: net_sales

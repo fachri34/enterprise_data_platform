@@ -18,6 +18,8 @@ select
 
     i.product_id,
 
+    i.location_id,
+
     p.product_name,
 
     p.product_category_name,

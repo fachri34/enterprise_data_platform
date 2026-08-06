@@ -74,10 +74,15 @@ def adventureworks_warehouse():
     dbt_intermediate = create_dbt_task_group(
         group_id="dbt_intermediate",
         select_path="path:models/intermediate",
+    ),
+    
+    dbt_marts = create_dbt_task_group(
+        group_id="dbt_marts",
+        select_path="path:models/marts",
     )
 
 
-    dbt_staging >> dbt_intermediate
+    dbt_staging >> dbt_intermediate >> dbt_marts
 
 
 # Instantiate DAG

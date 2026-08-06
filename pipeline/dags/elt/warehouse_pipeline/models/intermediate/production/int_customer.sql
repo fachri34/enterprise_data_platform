@@ -36,6 +36,8 @@ select
 
     c.person_id,
 
+    c.sales_territory_id,
+
     concat(
 
     p.first_name, ' ',
@@ -45,6 +47,8 @@ select
     ' ', p.last_name
 
     ) as customer_name,
+
+    s.store_id,
 
     s.store_name,
 

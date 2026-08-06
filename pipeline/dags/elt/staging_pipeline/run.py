@@ -1,5 +1,6 @@
 from airflow.decorators import dag
 from airflow.models import Variable
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from pendulum import datetime
 from elt.staging_pipeline.tasks.main import extract_task, load_task
 
@@ -19,9 +20,15 @@ def adventureworks_staging():
     # Get the incremental mode from Airflow Variables
     incremental_mode = Variable.get('ADVENTUREWORKS_STAGING_INCREMENTAL_MODE')
     incremental_mode = eval(incremental_mode)  # Convert string to boolean
+    
+    trigger_warehouse_dag = TriggerDagRunOperator(
+        task_id='trigger_warehouse_pipeline',
+        trigger_dag_id='adventureworks_warehouse',
+        trigger_rule='none_failed',  # Trigger even if the current DAG fails
+    )
 
     # Define the task dependencies
-    extract_task(incremental=incremental_mode) >> load_task(incremental=incremental_mode) 
+    extract_task(incremental=incremental_mode) >> load_task(incremental=incremental_mode) >> trigger_warehouse_dag
 
 # Instantiate the DAG
 adventureworks_staging()

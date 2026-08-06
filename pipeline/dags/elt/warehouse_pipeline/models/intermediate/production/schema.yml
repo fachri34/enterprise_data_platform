@@ -1,0 +1,76 @@
+version: 2
+
+models:
+
+  - name: int_customer
+    description: Customer enriched with person, territory and store information.
+
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+      - name: sales_territory_id
+        tests:
+          - relationships:
+              to: ref('stg_sales_territory')
+              field: sales_territory_id
+
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('stg_store')
+              field: store_id
+
+  - name: int_product_master
+    description: Product master enriched with category and subcategory.
+
+    columns:
+
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+      - name: product_category_name
+
+      - name: product_subcategory_name
+
+  - name: int_product_cost
+    description: Latest product standard cost.
+
+    columns:
+
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+      - name: standard_cost
+
+  - name: int_product_price
+    description: Latest product list price.
+
+    columns:
+
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+      - name: list_price
+
+  - name: int_product_profitability
+    description: Product profitability metrics.
+
+    columns:
+
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+      - name: unit_profit
+
+      - name: profit_margin

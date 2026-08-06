@@ -1,0 +1,27 @@
+version: 2
+
+models:
+
+  - name: int_product_inventory
+    description: Current inventory by location.
+
+    columns:
+
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('int_product_master')
+              field: product_id
+
+      - name: quantity
+
+  - name: int_inventory_balance
+    description: Inventory valuation.
+
+    columns:
+
+      - name: product_id
+
+      - name: inventory_cost
+
+      - name: inventory_retail_value

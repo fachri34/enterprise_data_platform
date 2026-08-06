@@ -1,0 +1,79 @@
+version: 2
+
+models:
+
+  - name: fact_order
+    description: Sales fact table.
+
+    columns:
+
+      - name: fact_order_key
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_key
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
+
+      - name: product_key
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+
+      - name: sales_territory_key
+        tests:
+          - relationships:
+              to: ref('dim_sales_territory')
+              field: sales_territory_key
+
+      - name: store_key
+        tests:
+          - relationships:
+              to: ref('dim_store')
+              field: store_key
+
+      - name: shipmethod_key
+        tests:
+          - relationships:
+              to: ref('dim_shipmethod')
+              field: shipmethod_key
+
+  - name: fact_inventory
+
+    columns:
+
+      - name: inventory_fact_key
+        tests:
+          - unique
+          - not_null
+
+      - name: product_key
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+
+      - name: location_key
+        tests:
+          - relationships:
+              to: ref('dim_location')
+              field: location_key
+
+  - name: fact_product_profitability
+
+    columns:
+
+      - name: profitability_fact_key
+        tests:
+          - unique
+          - not_null
+
+      - name: product_key
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
