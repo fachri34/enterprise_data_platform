@@ -1,6 +1,6 @@
 include .env
 
-compose-up: postgres-up minio-up airflow-up
+compose-up: postgres-up minio-up airflow-up metabase-up	
 	@echo '__________________________________________________________'
 	@echo 'All containers are up and running...'
 	@echo '==========================================================='
@@ -24,6 +24,13 @@ airflow-up:
 	@echo 'Creating Airflow Instance...'
 	@echo '__________________________________________________________'
 	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env up -d
+	@echo '==========================================================='
+
+metabase-up:
+	@echo '__________________________________________________________'
+	@echo 'Initializing Metabase...'
+	@echo '__________________________________________________________'
+	@docker compose -f ./docker/metabase/docker-compose.yml --env-file .env up -d
 	@echo '==========================================================='
 
 airflow-compose-build:
