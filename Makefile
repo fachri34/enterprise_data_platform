@@ -47,7 +47,7 @@ airflow-connection:
 	@docker exec -i airflow-webserver airflow variables import -a overwrite /init/variables_and_connections/airflow_variables_init.json
 	@echo '==========================================================='
 
-compose-down: postgres-down minio-down airflow-down
+compose-down: postgres-down minio-down airflow-down metabase-down
 	@echo '__________________________________________________________'
 	@echo 'All containers are down...'
 	@echo '==========================================================='
@@ -63,3 +63,7 @@ minio-down:
 airflow-down:
 	@echo 'Stopping Airflow...'
 	@docker compose -f ./docker/airflow/docker-compose.yml --env-file .env down
+
+metabase-down:
+	@echo 'Stopping Metabase...'
+	@docker compose -f ./docker/metabase/docker-compose.yml --env-file .env down

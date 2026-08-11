@@ -1,0 +1,209 @@
+version: 2
+
+models:
+
+  - name: customer_segmentation
+    description: >
+      RFM-based customer segmentation used as customer intelligence
+      for Reverse ETL.
+
+    columns:
+
+      - name: customer_key
+        description: "Unique warehouse key for the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Business identifier of the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_segment
+        description: "RFM-based customer segment."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Platinum
+                - Gold
+                - Silver
+                - Bronze
+
+      - name: rfm_score
+        description: "Combined RFM score."
+        tests:
+          - not_null
+
+      - name: recency_days
+        description: "Number of days since the customer's last purchase."
+        tests:
+          - not_null
+
+      - name: total_orders
+        description: "Total number of distinct orders."
+        tests:
+          - not_null
+
+      - name: total_sales
+        description: "Total customer sales."
+        tests:
+          - not_null
+
+
+  - name: customer_clv
+    description: >
+      Historical customer value and annualized customer value
+      used as customer intelligence for Reverse ETL.
+
+    columns:
+
+      - name: customer_key
+        description: "Unique warehouse key for the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Business identifier of the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: total_orders
+        description: "Total number of customer orders."
+        tests:
+          - not_null
+
+      - name: total_sales
+        description: "Total customer sales."
+        tests:
+          - not_null
+
+      - name: total_profit
+        description: "Total customer profit."
+        tests:
+          - not_null
+
+      - name: average_order_value
+        description: "Average sales value per order."
+        tests:
+          - not_null
+
+      - name: customer_lifetime_days
+        description: "Number of days between first and last purchase."
+        tests:
+          - not_null
+
+      - name: estimated_annual_customer_value
+        description: "Annualized historical customer value."
+        tests:
+          - not_null
+
+      - name: customer_value_segment
+        description: "Customer value classification."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - High Value
+                - Medium Value
+                - Low Value
+
+
+  - name: customer_churn_risk
+    description: >
+      Rule-based customer churn risk classification used for
+      customer retention through Reverse ETL.
+
+    columns:
+
+      - name: customer_key
+        description: "Unique warehouse key for the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Business identifier of the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: recency_days
+        description: "Number of days since the customer's last purchase."
+        tests:
+          - not_null
+
+      - name: churn_risk
+        description: "Rule-based customer churn risk."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - High
+                - Medium
+                - Low
+
+      - name: churn_risk_score
+        description: "Numeric representation of churn risk."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - 1
+                - 2
+                - 3
+              quote: false
+
+
+
+  - name: product_reorder_recommendation
+    description: >
+      Rule-based product reorder recommendation based on inventory
+      level and historical sales performance.
+
+    columns:
+
+      - name: product_key
+        description: "Warehouse key of the product."
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Business identifier of the product."
+        tests:
+          - not_null
+
+      - name: location_key
+        description: "Warehouse key of the inventory location."
+        tests:
+          - not_null
+
+      - name: location_id
+        description: "Business identifier of the inventory location."
+        tests:
+          - not_null
+
+      - name: quantity_on_hand
+        description: "Current inventory quantity."
+        tests:
+          - not_null
+
+      - name: reorder_priority
+        description: "Priority assigned to the reorder recommendation."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Critical
+                - High
+                - Medium
+                - Low
+
+      - name: reorder_required
+        description: "Indicates whether the product should be reordered."
+        tests:
+          - not_null
