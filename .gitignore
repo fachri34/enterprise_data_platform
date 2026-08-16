@@ -2,3 +2,5 @@
 **/airflow_connections_init.yml
 **/airflow_variables_init.json
 creds
+__pycache__/
+*.py[cod]
