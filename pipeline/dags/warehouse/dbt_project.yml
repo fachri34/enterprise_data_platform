@@ -47,3 +47,7 @@ models:
     analytics:
       +materialized: table
       +schema: analytics
+    
+    features:
+      +materialized: table
+      +schema: features

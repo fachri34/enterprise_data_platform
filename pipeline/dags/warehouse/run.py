@@ -33,11 +33,16 @@ def adventureworks_warehouse():
         select_path="path:models/analytics",
     )
     
+    dbt_features = create_dbt_task_group(
+        group_id="dbt_features",
+        select_path="path:models/features",
+    )
+    
     trigger_reverse_etl = TriggerDagRunOperator(
         task_id="trigger_reverse_etl",
         trigger_dag_id="reverse_etl"
     )
 
-    dbt_staging >> dbt_intermediate >> dbt_marts >> dbt_analytics >> trigger_reverse_etl
+    dbt_staging >> dbt_intermediate >> dbt_marts >> dbt_analytics >> dbt_features >> trigger_reverse_etl
 
 adventureworks_warehouse()
