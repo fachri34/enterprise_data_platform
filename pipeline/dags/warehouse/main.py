@@ -1,20 +1,11 @@
-from pendulum import datetime
-import os
-
-from airflow.decorators import dag
-
 from cosmos import DbtTaskGroup
-from cosmos.config import (
-    ProjectConfig,
-    ProfileConfig,
-    RenderConfig,
-    ExecutionConfig,
-)
+from cosmos.config import ProjectConfig, ProfileConfig, RenderConfig, ExecutionConfig
 from cosmos.constants import TestBehavior
 from cosmos.profiles import GoogleCloudServiceAccountFileProfileMapping
+import os
 
 
-DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/elt/warehouse_pipeline"
+DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/warehouse"
 
 project_config = ProjectConfig(
     dbt_project_path=DBT_PROJECT_PATH,
@@ -53,41 +44,3 @@ def create_dbt_task_group(group_id: str,select_path: str,):
             "install_deps": True,
         },
     )
-
-
-
-@dag(
-    dag_id="adventureworks_warehouse",
-    description="AdventureWorks Warehouse Pipeline",
-    start_date=datetime(2026, 7, 8, tz="Asia/Jakarta"),
-    schedule=None,
-    catchup=False,
-    tags=["warehouse", "dbt", "cosmos"],
-)
-def adventureworks_warehouse():
-
-    dbt_staging = create_dbt_task_group(
-        group_id="dbt_staging",
-        select_path="path:models/staging",
-    )
-    
-    dbt_intermediate = create_dbt_task_group(
-        group_id="dbt_intermediate",
-        select_path="path:models/intermediate",
-    )
-    
-    dbt_marts = create_dbt_task_group(
-        group_id="dbt_marts",
-        select_path="path:models/marts",
-    )
-    
-    dbt_analytics = create_dbt_task_group(
-        group_id="dbt_analytics",
-        select_path="path:models/analytics",
-    )
-    
-
-    dbt_staging >> dbt_intermediate >> dbt_marts >> dbt_analytics
-
-
-adventureworks_warehouse()

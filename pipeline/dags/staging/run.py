@@ -2,7 +2,7 @@ from airflow.decorators import dag
 from airflow.models import Variable
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from pendulum import datetime
-from elt.staging_pipeline.tasks.main import extract_task, load_task
+from staging.tasks.main import extract_task, load_task
 
 # Define the DAG with its properties
 @dag(

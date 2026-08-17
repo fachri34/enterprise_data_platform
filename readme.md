@@ -27,7 +27,7 @@ End-to-end data platform project built using the **AdventureWorks dataset** to d
 | Milestone | Description                       | Status         |
 | --------- | --------------------------------- | -------------- |
 | 1         | Modern ELT Platform               | ✅ Completed |
-| 2         | Analytics & Reverse ETL           | 🚧 In Progress  |
+| 2         | Analytics & Reverse ETL           | ✅ Completed  |
 | 3         | ML Platform & Feature Store       | ⏳ Planned      |
 | 4         | Production MLOps Platform         | ⏳ Planned      |
 | 5         | AI Analytics Platform / RAG       | ⏳ Planned      |

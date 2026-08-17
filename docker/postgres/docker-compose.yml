@@ -1,41 +1,30 @@
-CREATE SCHEMA IF NOT EXISTS operational;
+version: "3.9"
 
-CREATE TABLE operational.customer_intelligence (
-    customer_id VARCHAR(50) PRIMARY KEY,
-    customer_name VARCHAR(255),
+services:
+  sources-postgres:
+    image: postgres:16
+    container_name: sources-postgres
+    hostname: sources-postgres
+    restart: unless-stopped
 
-    customer_segment VARCHAR(50),
-    rfm_score INTEGER,
+    environment:
+      POSTGRES_DB: ${SRC_POSTGRES_DB}
+      POSTGRES_USER: ${SRC_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${SRC_POSTGRES_PASSWORD}
 
-    total_sales NUMERIC(18,2),
-    total_profit NUMERIC(18,2),
-    average_order_value NUMERIC(18,2),
+    ports:
+      - "${SRC_POSTGRES_PORT}:5432"
 
-    estimated_annual_customer_value NUMERIC(18,2),
-    customer_value_segment VARCHAR(50),
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+      - source-volume:/var/lib/postgresql/data
 
-    recency_days INTEGER,
-    churn_risk VARCHAR(20),
-    churn_risk_score INTEGER,
+    networks:
+      - enterprise-networks
 
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+networks:
+  enterprise-networks:
+    external: true
 
-CREATE TABLE operational.inventory_reorder (
-    product_id VARCHAR(50),
-    product_name VARCHAR(255),
-
-    location_id VARCHAR(50),
-    location_name VARCHAR(255),
-
-    quantity_on_hand NUMERIC(18,2),
-    total_quantity_sold NUMERIC(18,2),
-    net_sales NUMERIC(18,2),
-
-    reorder_priority VARCHAR(20),
-    reorder_required BOOLEAN,
-
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (product_id, location_id)
-);
+volumes:
+  source-volume:

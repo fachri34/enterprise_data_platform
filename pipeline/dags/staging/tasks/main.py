@@ -3,9 +3,8 @@ from airflow.datasets import Dataset
 from airflow.models import Variable
 from airflow.operators.python import PythonOperator
 import os
-
-from elt.staging_pipeline.tasks.extract import extract
-from elt.staging_pipeline.tasks.load import load
+from staging.tasks.extract import extract
+from staging.tasks.load import load
 
 GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 
@@ -35,7 +34,7 @@ def extract_task(incremental: bool):
                     f"s3://adv-db/{schema}/{table_name}/"
                 )
             ],
-            trigger_rule="none_failed",  # Continue even if some tasks fail
+            trigger_rule="none_failed",
         )
 
 
@@ -60,15 +59,7 @@ def load_task(incremental: bool):
                 "table_name": table_name,
                 "incremental": incremental,
             },
-            inlets=[
-                Dataset(
-                    f"s3://adv-db/{schema}/{table_name}/"
-                )
-            ],
-            outlets=[
-                Dataset(
-                    f"bigquery://{GCP_PROJECT_ID}/raw/{table_name}"
-                )
-            ],
-            trigger_rule="none_failed",  # Continue even if some tasks fail
+            inlets=[Dataset(f"s3://adv-db/{schema}/{table_name}/")],
+            outlets=[Dataset(f"bigquery://{GCP_PROJECT_ID}/raw/{table_name}")],
+            trigger_rule="none_failed",
         )
