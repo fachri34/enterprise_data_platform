@@ -1,0 +1,27 @@
+
+
+b
+customer3AdventureWorks customer entity for churn prediction"customer_keyJadventureworks_ml
+Ü«Ô ˆØ¬ß«Ô’úÒ
+G
+(
+__dummy"
+__dummy_idJadventureworks_ml
+Ü«Ô˜üÎ¬ß«ÔàŒÓ"$06ac13c5-27dc-4a95-ac02-a5a6cf601ed8*¬ß«ÔèÌÉÔ2˜
+ù
+customer_churn_featuresadventureworks_mlcustomer"
+customer_recency"
+customer_frequency"
+customer_monetary"
+
+orders_30d"
+
+orders_90d"
+avg_order_value2€†°–:ªevent_timestampbA
+?adventureworks-pipeline-501611.features.customer_churn_featuresŠ9feast.infra.offline_stores.bigquery_source.BigQuerySource¢customer_churn_source@b
+customer_key
+Ü«ÔÀû¼Ü«ÔÀû¼b¾event_timestampbA
+?adventureworks-pipeline-501611.features.customer_churn_featuresŠ9feast.infra.offline_stores.bigquery_source.BigQuerySource¢customer_churn_sourceªadventureworks_mlŠ3
+
+adventureworks_ml
+ŒÜ«Ôèü„¿«ß«Ô¸”Áµ

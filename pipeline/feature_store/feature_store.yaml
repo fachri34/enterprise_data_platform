@@ -1,0 +1,14 @@
+project: adventureworks_ml
+
+provider: local
+
+registry:
+  path: data/registry.db
+
+offline_store:
+  type: bigquery
+  dataset: features
+
+online_store:
+  type: redis
+  connection_string: "redis:6379"

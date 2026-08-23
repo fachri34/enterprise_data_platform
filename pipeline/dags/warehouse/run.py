@@ -1,5 +1,5 @@
 from pendulum import datetime
-from warehouse.main import create_dbt_task_group
+from warehouse.main import main
 from airflow.decorators import dag
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
@@ -12,37 +12,12 @@ from airflow.operators.trigger_dagrun import TriggerDagRunOperator
     catchup=False,
 )
 def adventureworks_warehouse():
-
-    dbt_staging = create_dbt_task_group(
-        group_id="dbt_staging",
-        select_path="path:models/staging",
-    )
-    
-    dbt_intermediate = create_dbt_task_group(
-        group_id="dbt_intermediate",
-        select_path="path:models/intermediate",
-    )
-    
-    dbt_marts = create_dbt_task_group(
-        group_id="dbt_marts",
-        select_path="path:models/marts",
-    )
-    
-    dbt_analytics = create_dbt_task_group(
-        group_id="dbt_analytics",
-        select_path="path:models/analytics",
-    )
-    
-    dbt_features = create_dbt_task_group(
-        group_id="dbt_features",
-        select_path="path:models/features",
-    )
     
     trigger_reverse_etl = TriggerDagRunOperator(
         task_id="trigger_reverse_etl",
         trigger_dag_id="reverse_etl"
-    )
-
-    dbt_staging >> dbt_intermediate >> dbt_marts >> dbt_analytics >> dbt_features >> trigger_reverse_etl
+    )    
+    
+    main() >> trigger_reverse_etl
 
 adventureworks_warehouse()
