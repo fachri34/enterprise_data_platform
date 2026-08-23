@@ -1,6 +1,6 @@
 include .env
 
-compose-up: postgres-up minio-up airflow-up metabase-up	
+compose-up: postgres-up minio-up airflow-up metabase-up	machine-learning-up
 	@echo '__________________________________________________________'
 	@echo 'All containers are up and running...'
 	@echo '==========================================================='
@@ -47,7 +47,7 @@ airflow-connection:
 	@docker exec -i airflow-webserver airflow variables import -a overwrite /init/variables_and_connections/airflow_variables_init.json
 	@echo '==========================================================='
 
-compose-down: postgres-down minio-down airflow-down metabase-down
+compose-down: postgres-down minio-down airflow-down metabase-down machine-learning-down
 	@echo '__________________________________________________________'
 	@echo 'All containers are down...'
 	@echo '==========================================================='
@@ -67,3 +67,21 @@ airflow-down:
 metabase-down:
 	@echo 'Stopping Metabase...'
 	@docker compose -f ./docker/metabase/docker-compose.yml --env-file .env down
+
+machine-learning-up:
+	@echo '__________________________________________________________'
+	@echo 'Creating Machine Learning Runtime...'
+	@echo '__________________________________________________________'
+	@docker compose -f ./docker/machine_learning/docker-compose.yml --env-file .env up -d
+	@echo '==========================================================='
+
+machine-learning-down:
+	@echo 'Stopping Machine Learning Runtime...'
+	@docker compose -f ./docker/machine_learning/docker-compose.yml --env-file .env down
+
+machine-learning-build:
+	@echo '__________________________________________________________'
+	@echo 'Building Machine Learning Runtime...'
+	@echo '__________________________________________________________'
+	@docker compose -f ./docker/machine_learning/docker-compose.yml --env-file .env build --no-cache
+	@echo '==========================================================='

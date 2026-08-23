@@ -14,8 +14,7 @@ RUN python -m virtualenv /opt/airflow/dbt_venv && \
 
 # Tambahkan ini
 ENV DBT_VENV=/opt/airflow/dbt_venv
-ENV PATH="${DBT_VENV}/bin:${PATH}"
 
-RUN dbt --version
+RUN /opt/airflow/dbt_venv/bin/dbt --version
 
 USER airflow

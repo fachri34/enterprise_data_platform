@@ -1,0 +1,55 @@
+services:
+
+  machine_learning:
+    build:
+      context: ../..
+      dockerfile: docker/machine_learning/Dockerfile
+
+    container_name: machine-learning-service
+
+    volumes:
+      - ../../pipeline/feature_store:/app/feature_store
+      - ../../pipeline/dags/machine_learning:/app/machine_learning
+      - ../../creds/gcp-service-account.json:/app/creds/gcp-service-account.json:ro
+
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /app/creds/gcp-service-account.json
+
+    working_dir: /app
+
+    command: ["sleep", "infinity"]
+
+    depends_on:
+      redis:
+        condition: service_started
+
+    networks:
+      - enterprise-networks
+
+
+  redis:
+    image: redis:7.4-alpine
+
+    container_name: machine-learning-redis
+
+    volumes:
+      - machine-learning-redis-data:/data
+
+    command:
+      [
+        "redis-server",
+        "--appendonly",
+        "yes"
+      ]
+
+    networks:
+      - enterprise-networks
+
+
+volumes:
+  machine-learning-redis-data:
+
+
+networks:
+  enterprise-networks:
+    external: true
